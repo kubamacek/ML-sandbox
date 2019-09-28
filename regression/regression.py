@@ -8,6 +8,7 @@ from sklearn.linear_model import LinearRegression
 import matplotlib.pyplot as plt
 from matplotlib import style
 import datetime
+import pickle
 
 style.use('ggplot')
 
@@ -37,8 +38,15 @@ df.dropna(inplace=True)
 y = np.array(df['label'])
 
 X_train, X_test, Y_train, Y_test = model_selection.train_test_split(X, y, test_size=0.2)
-clf = LinearRegression(n_jobs=-1)
-clf.fit(X_train, Y_train)
+
+#clf = LinearRegression(n_jobs=-1)
+#clf.fit(X_train, Y_train)
+#with open('linearregression.pickle','wb') as f:
+#    pickle.dump(clf, f)
+
+pickle_in = open('linearregression.pickle','rb')
+clf = pickle.load(pickle_in)
+
 confidence = clf.score(X_test, Y_test)
 print("determination R^2: {}".format(confidence))
 
